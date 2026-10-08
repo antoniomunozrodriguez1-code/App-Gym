@@ -1,0 +1,6 @@
+{
+  "name": "Kinetic Performance",
+  "description": "App para socios de gimnasio y alto rendimiento: reserva de clases WOD, gestión de cuotas, membresías y seguimiento atlético.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

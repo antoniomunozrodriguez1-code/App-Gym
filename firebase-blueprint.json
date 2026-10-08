@@ -1,0 +1,97 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Perfil del socio del gimnasio",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 120 },
+        "avatarUrl": { "type": "string", "maxLength": 500 },
+        "role": { "type": "string", "enum": ["member", "admin"] },
+        "currentPlanId": { "type": "string", "maxLength": 50 },
+        "planName": { "type": "string", "maxLength": 100 },
+        "planRenewalDate": { "type": "string", "maxLength": 50 },
+        "membershipNumber": { "type": "string", "maxLength": 20 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "GymClass": {
+      "title": "GymClass",
+      "description": "Sesión o clase programada en el gimnasio",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "maxLength": 100 },
+        "category": { "type": "string", "maxLength": 50 },
+        "date": { "type": "string", "maxLength": 20 },
+        "startTime": { "type": "string", "maxLength": 10 },
+        "endTime": { "type": "string", "maxLength": 10 },
+        "coachName": { "type": "string", "maxLength": 80 },
+        "coachAvatar": { "type": "string", "maxLength": 500 },
+        "capacity": { "type": "number" },
+        "bookedCount": { "type": "number" },
+        "description": { "type": "string", "maxLength": 500 },
+        "location": { "type": "string", "maxLength": 100 },
+        "wod": { "type": "string", "maxLength": 1000 }
+      },
+      "required": ["id", "title", "category", "date", "startTime", "endTime", "coachName", "capacity", "bookedCount"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Reserva de plaza para una clase por un socio",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string", "maxLength": 100 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "userName": { "type": "string", "maxLength": 100 },
+        "userEmail": { "type": "string", "maxLength": 120 },
+        "classTitle": { "type": "string", "maxLength": 100 },
+        "classDate": { "type": "string", "maxLength": 20 },
+        "classTime": { "type": "string", "maxLength": 20 },
+        "category": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "enum": ["confirmed", "cancelled"] },
+        "bookedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "classId", "userId", "userName", "classTitle", "classDate", "status"]
+    },
+    "MembershipPlan": {
+      "title": "MembershipPlan",
+      "description": "Plan o tarifa de suscripción para socios del gimnasio",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 80 },
+        "badge": { "type": "string", "maxLength": 50 },
+        "price": { "type": "number" },
+        "billingPeriod": { "type": "string", "maxLength": 30 },
+        "popular": { "type": "boolean" },
+        "accessHours": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string", "maxLength": 300 }
+      },
+      "required": ["id", "name", "price", "billingPeriod"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "UserProfile" },
+      "description": "Colección de perfiles de socios y administradores"
+    },
+    "/classes/{classId}": {
+      "schema": { "$ref": "GymClass" },
+      "description": "Colección de clases deportivas y sesiones programadas"
+    },
+    "/bookings/{bookingId}": {
+      "schema": { "$ref": "Booking" },
+      "description": "Colección de reservas de plazas por parte de los socios"
+    },
+    "/plans/{planId}": {
+      "schema": { "$ref": "MembershipPlan" },
+      "description": "Colección de planes de suscripción y cuotas"
+    }
+  }
+}
